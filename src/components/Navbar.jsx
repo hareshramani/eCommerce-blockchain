@@ -40,7 +40,6 @@ function Navbar() {
 
         initializeWallet();
 
-        // Cleanup function for event listeners
         return () => {
             if (window.ethereum) {
                 window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
@@ -48,11 +47,10 @@ function Navbar() {
                 window.ethereum.removeListener('disconnect', handleDisconnect);
             }
         };
-    }, []); // Empty dependency array means this runs once on mount and cleanup on unmount
+    }, []);
 
     const handleAccountsChanged = async (accounts) => {
         if (accounts.length === 0) {
-            // MetaMask is locked or the user has disconnected all accounts
             console.log('MetaMask disconnected.');
             resetWalletState();
         } else {
@@ -68,8 +66,6 @@ function Navbar() {
 
     const handleChainChanged = (chainId) => {
         console.log('Network changed to:', chainId);
-        // It's often recommended to reload the page on network change
-        // to ensure the dApp logic is consistent with the new network.
         window.location.reload();
     };
 
